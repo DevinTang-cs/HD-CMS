@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkhd_cms"]=self["webpackChunkhd_cms"]||[]).push([[949],{949:function(n,u,r){r.r(u),r.d(u,{default:function(){return d}});var e=r(641);function t(n,u,r,t,c,s){return(0,e.uX)(),(0,e.CE)("div",null,"MAIN")}var c=(0,e.pM)({setup(){return{}}}),s=r(262);const a=(0,s.A)(c,[["render",t]]);var d=a}}]);
+//# sourceMappingURL=949.ae28d70d.js.map

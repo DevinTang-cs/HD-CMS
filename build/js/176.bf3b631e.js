@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkhd_cms"]=self["webpackChunkhd_cms"]||[]).push([[176],{176:function(n,u,e){e.r(u),e.d(u,{default:function(){return d}});var t=e(641),r=e(33);function s(n,u,e,s,c,l){return(0,t.uX)(),(0,t.CE)(t.FK,null,[u[0]||(u[0]=(0,t.Lk)("div",null,"LOGIN",-1)),(0,t.Lk)("h2",null,(0,r.v_)(n.$store.state.name),1)],64)}var c=(0,t.pM)({setup(){}}),l=e(262);const a=(0,l.A)(c,[["render",s]]);var d=a}}]);
+//# sourceMappingURL=176.bf3b631e.js.map
