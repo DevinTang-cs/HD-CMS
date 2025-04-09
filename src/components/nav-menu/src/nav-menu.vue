@@ -28,7 +28,10 @@
             </template>
             <template v-for="subitem in item.children" :key="subitem.id">
               <!-- 为 el-menu-item 添加 index 属性 -->
-              <el-menu-item :index="subitem.id.toString()">
+              <el-menu-item
+                :index="subitem.id.toString()"
+                @click="handleMenuItemClick(subitem)"
+              >
                 <span>{{ subitem.name }}</span>
               </el-menu-item>
             </template>
@@ -50,6 +53,7 @@
 import { defineComponent, computed } from 'vue'
 import { useStore } from '@/store'
 import { iconMapping } from '..'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   props: {
@@ -61,10 +65,17 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const userMenus = computed(() => store.state.login.userMenus)
+    const router = useRouter()
+    const handleMenuItemClick = (item: any) => {
+      router.push({
+        path: item.url ?? '/not-found'
+      })
+    }
 
     return {
       userMenus,
-      iconMapping
+      iconMapping,
+      handleMenuItemClick
     }
   }
 })

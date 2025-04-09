@@ -1,6 +1,6 @@
 <template>
-  <div class="nav-header" @click="handleFoldClick">
-    <el-icon>
+  <div class="nav-header">
+    <el-icon @click="handleFoldClick">
       <template v-if="isFold">
         <div class="fold-menu"><i-ep-fold /></div>
       </template>
@@ -8,14 +8,22 @@
         <div class="fold-menu"><i-ep-expand /></div>
       </template>
     </el-icon>
+    <div class="content">
+      <div class="info">info</div>
+      <user-info></user-info>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import userInfo from './user-info.vue'
 
 export default defineComponent({
   emits: ['foldChange'],
+  components: {
+    userInfo
+  },
   setup(props, { emit }) {
     const isFold = ref(false)
     const handleFoldClick = () => {
@@ -40,6 +48,13 @@ export default defineComponent({
   .fold-menu {
     font-size: 30px;
     cursor: pointer;
+  }
+  .content {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    padding: 0 20px;
+    align-items: center;
   }
 }
 </style>

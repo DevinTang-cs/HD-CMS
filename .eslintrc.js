@@ -29,6 +29,7 @@ module.exports = {
     ],
     'vue/multi-word-component-names': 'off', // 关闭组件名规则
     'vue/no-multiple-template-root': 'off',
-    '@typescript-eslint/no-explicit-any': 'off'
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-var-requires': 'off'
   }
 }
