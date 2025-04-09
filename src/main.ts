@@ -8,7 +8,7 @@ import './assets/css/index.less'
 import { setupStore } from './store'
 
 const app = createApp(App)
-app.use(router)
 app.use(store)
 setupStore()
+app.use(router)
 app.mount('#app')
