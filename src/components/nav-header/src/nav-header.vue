@@ -9,20 +9,25 @@
       </template>
     </el-icon>
     <div class="content">
-      <div class="info">info</div>
+      <breadcrumb :breadcrumb="breadcrumb"></breadcrumb>
       <user-info></user-info>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import userInfo from './user-info.vue'
+import Breadcrumb from '@/base-ui/breadcrumb/index'
+import { pathMapBreadcrumb } from '@/utils/map-menus'
+import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   emits: ['foldChange'],
   components: {
-    userInfo
+    userInfo,
+    Breadcrumb
   },
   setup(props, { emit }) {
     const isFold = ref(false)
@@ -30,9 +35,21 @@ export default defineComponent({
       isFold.value = !isFold.value
       emit('foldChange', isFold.value)
     }
+
+    const store = useStore()
+    const route = useRoute()
+    // const userMenus = store.state.login.userMenus
+    // const currentPath = route.path
+    const breadcrumb = computed(() => {
+      const userMenus = store.state.login.userMenus
+      // const route = useRoute()
+      const currentPath = route.path
+      return pathMapBreadcrumb(userMenus, currentPath)
+    })
     return {
       isFold,
-      handleFoldClick
+      handleFoldClick,
+      breadcrumb
     }
   }
 })
