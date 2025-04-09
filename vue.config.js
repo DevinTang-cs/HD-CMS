@@ -39,6 +39,7 @@ module.exports = {
         resolvers: [
           ElementPlusResolver(),
           IconsResolver({
+            prefix: 'i',
             enabledCollections: ['ep']
           })
         ],
@@ -46,7 +47,8 @@ module.exports = {
       }),
       ElementPlus(),
       Icons({
-        autoInstall: true
+        autoInstall: true,
+        compiler: 'vue3'
       })
     ]
   }
