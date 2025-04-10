@@ -4,10 +4,17 @@
     <div class="content">
       <my-table :list-data="userList" :propList="propList">
         <template #status="scope">
-          <el-button>{{ scope.row.enable ? '启用' : '禁用' }}</el-button>
+          <el-button
+            size="small"
+            :type="scope.row.enable ? 'success' : 'danger'"
+            >{{ scope.row.enable ? '启用' : '禁用' }}</el-button
+          >
         </template>
         <template #createAt="scope">
-          <strong>{{ scope.row.createAt }}</strong>
+          <strong>{{ $filters.formatTime(scope.row.createAt) }}</strong>
+        </template>
+        <template #updateAt="scope">
+          <strong>{{ $filters.formatTime(scope.row.updateAt) }}</strong>
         </template>
       </my-table>
     </div>

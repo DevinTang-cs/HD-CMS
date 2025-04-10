@@ -5,4 +5,14 @@ declare module '*.vue' {
   export default component
 }
 
-declare let $store: any
+// declare let $store: any
+
+import { ComponentCustomProperties } from 'vue'
+
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    $filters: {
+      formatTime: (value: string) => string
+    }
+  }
+}
