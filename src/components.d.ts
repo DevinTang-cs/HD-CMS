@@ -41,6 +41,7 @@ declare module 'vue' {
     IEpUser: typeof import('~icons/ep/user')['default']
     NavHeader: typeof import('./components/nav-header/src/nav-header.vue')['default']
     NavMenu: typeof import('./components/nav-menu/src/nav-menu.vue')['default']
+    PageSearch: typeof import('./components/page-search/src/page-search.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     UserInfo: typeof import('./components/nav-header/src/user-info.vue')['default']

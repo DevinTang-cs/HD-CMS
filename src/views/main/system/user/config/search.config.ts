@@ -55,12 +55,10 @@ const labelWidth = '120px'
 const itemStyle = {
   padding: '20px 20px'
 }
-const colLayout = {
-  span: 8
-}
+// const colLayout = undefined
 const searchFormConfig: IForm = {
   labelWidth: labelWidth,
-  colLayout: colLayout,
+  // colLayout: colLayout,
   itemStyle: itemStyle,
   formItems: formItems
 }
