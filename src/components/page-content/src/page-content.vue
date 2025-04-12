@@ -2,6 +2,8 @@
   <div class="page-content">
     <my-table
       :list-data="dataList"
+      :list-count="dataCount"
+      v-model:page="pageInfo"
       v-bind="contentTableConfig"
       :prop-list="contentTableConfig.propList"
     >
@@ -36,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import myTable from '@/base-ui/table/index'
 
@@ -56,20 +58,37 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore()
-    store.dispatch('system/getPageListAction', {
-      pageName: props.pageName,
-      queryInfo: {
-        offset: 0,
-        size: 10
-      }
-    })
+
+    const pageInfo = ref({ currentPage: 0, pageSize: 10 })
+    watch(pageInfo, () => getPageData())
+
+    // 发送网络请求
+    const getPageData = (queryInfo: any = {}) => {
+      store.dispatch('system/getPageListAction', {
+        pageName: props.pageName,
+        queryInfo: {
+          offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+          size: pageInfo.value.pageSize,
+          ...queryInfo
+        }
+      })
+    }
+
+    // get data from vuex
     const dataList = computed(() =>
       store.getters['system/pageListData'](props.pageName)
     )
-    // const dataCount = computed(() => store.state.system.userCount)
+    const dataCount = computed(() =>
+      store.getters['system/pageListCount'](props.pageName)
+    )
+
+    getPageData()
+
     return {
-      dataList
-      // userCount
+      dataList,
+      getPageData,
+      dataCount,
+      pageInfo
     }
   }
 })

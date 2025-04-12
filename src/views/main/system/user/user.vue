@@ -1,7 +1,12 @@
 <template>
   <div class="user">
-    <page-search :search-form-config="searchFormConfig"></page-search>
+    <page-search
+      :search-form-config="searchFormConfig"
+      @reset-btn-click="handleResetClick"
+      @query-btn-click="handleQueryClick"
+    ></page-search>
     <page-content
+      ref="pageContentRef"
       :content-table-config="contentTableConfig"
       page-name="/users"
     ></page-content>
@@ -14,6 +19,7 @@ import searchFormConfig from './config/search.config'
 import pageSearch from '@/components/page-search/src/page-search.vue'
 import { contentTableConfig } from './config/content.config'
 import pageContent from '@/components/page-content/index'
+import { usePageSearch } from '@/hooks/usePageSearch'
 
 export default defineComponent({
   name: 'user',
@@ -21,10 +27,15 @@ export default defineComponent({
     pageSearch,
     pageContent
   },
-  setup() {
+  setup(props) {
+    const { pageContentRef, handleQueryClick, handleResetClick } =
+      usePageSearch()
     return {
       searchFormConfig,
-      contentTableConfig
+      contentTableConfig,
+      pageContentRef,
+      handleResetClick,
+      handleQueryClick
     }
   }
 })

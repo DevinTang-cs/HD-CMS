@@ -7,7 +7,7 @@
       <template #footer>
         <div class="handle-btns">
           <el-button type="primary" @click="handleResetClick">重置</el-button>
-          <el-button type="primary">搜索</el-button>
+          <el-button type="primary" @click="handleQueryClick">搜索</el-button>
         </div>
       </template>
     </HdForm>
@@ -28,7 +28,8 @@ export default defineComponent({
   components: {
     HdForm
   },
-  setup(props) {
+  emits: ['resetBtnClick', 'queryBtnClick'],
+  setup(props, { emit }) {
     const formItems = props.searchFormConfig?.formItems ?? []
     const formOriginData: any = {}
     for (const item of formItems) {
@@ -42,10 +43,17 @@ export default defineComponent({
       //   formData.value[`${key}`] = formOriginData[key]
       // }
       formData.value = formOriginData
+      emit('resetBtnClick')
     }
+
+    const handleQueryClick = () => {
+      emit('queryBtnClick', formData.value)
+    }
+
     return {
       formData,
-      handleResetClick
+      handleResetClick,
+      handleQueryClick
     }
   }
 })
