@@ -32,7 +32,15 @@
           </el-button>
         </div>
       </template>
-      <template #header></template>
+      <template
+        v-for="item in otherPropSlots"
+        :key="item.prop"
+        #[item.slotName]="scope"
+      >
+        <template v-if="item.slotName">
+          <slot :name="item.slotName" :row="scope.row"></slot>
+        </template>
+      </template>
     </my-table>
   </div>
 </template>
@@ -59,7 +67,7 @@ export default defineComponent({
   setup(props) {
     const store = useStore()
 
-    const pageInfo = ref({ currentPage: 0, pageSize: 10 })
+    const pageInfo = ref({ currentPage: 1, pageSize: 10 })
     watch(pageInfo, () => getPageData())
 
     // 发送网络请求
@@ -67,7 +75,7 @@ export default defineComponent({
       store.dispatch('system/getPageListAction', {
         pageName: props.pageName,
         queryInfo: {
-          offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+          offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
           size: pageInfo.value.pageSize,
           ...queryInfo
         }
@@ -82,13 +90,25 @@ export default defineComponent({
       store.getters['system/pageListCount'](props.pageName)
     )
 
+    // 获取动态插槽名称
+    const otherPropSlots = props.contentTableConfig.propList.filter(
+      (item: any) => {
+        if (item.slotName === 'status') return false
+        if (item.slotName === 'createAt') return false
+        if (item.slotName === 'updateAt') return false
+        if (item.slotName === 'handler') return false
+        return true
+      }
+    )
+
     getPageData()
 
     return {
       dataList,
       getPageData,
       dataCount,
-      pageInfo
+      pageInfo,
+      otherPropSlots
     }
   }
 })

@@ -10,7 +10,9 @@ const systemModule: Module<ISystemState, IRootState> = {
       userList: [],
       userCount: 0,
       roleList: [],
-      roleCount: 0
+      roleCount: 0,
+      goodsList: [],
+      goodsCount: 0
     }
   },
   mutations: {
@@ -25,6 +27,12 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     changeRoleCount(state, roleCount: number) {
       state.roleCount = roleCount
+    },
+    changeGoodsList(state, goodsList: any[]) {
+      state.goodsList = goodsList
+    },
+    changeGoodsCount(state, goodsCount: number) {
+      state.goodsCount = goodsCount
     }
   },
   getters: {
@@ -35,6 +43,8 @@ const systemModule: Module<ISystemState, IRootState> = {
             return state.userList
           case '/role':
             return state.roleList
+          case '/goods':
+            return state.goodsList
         }
       }
     },
@@ -45,6 +55,8 @@ const systemModule: Module<ISystemState, IRootState> = {
             return state.userCount
           case '/role':
             return state.roleCount
+          case '/goods':
+            return state.goodsCount
         }
       }
     }
@@ -65,6 +77,9 @@ const systemModule: Module<ISystemState, IRootState> = {
       } else if (pageName === '/role') {
         commit('changeRoleList', list)
         commit('changeRoleCount', totalCount)
+      } else if (pageName === '/goods') {
+        commit('changeGoodsList', list)
+        commit('changeGoodsCount', totalCount)
       }
     }
   }

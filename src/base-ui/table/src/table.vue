@@ -29,7 +29,7 @@
         width="70px"
       ></el-table-column>
       <template v-for="propItem in propList" :key="propItem.prop">
-        <el-table-column v-bind="propItem" align="center">
+        <el-table-column v-bind="propItem" align="center" show-overflow-tooltip>
           <template #default="scope">
             <slot :name="propItem.slotName" :row="scope.row">
               {{ scope.row[propItem.prop] }}
@@ -87,7 +87,7 @@ export default defineComponent({
     },
     page: {
       type: Object,
-      default: () => ({ currentPage: 0, pageSize: 10 })
+      default: () => ({ currentPage: 1, pageSize: 10 })
     }
   },
   emits: ['selectionChange', 'update:page'],
