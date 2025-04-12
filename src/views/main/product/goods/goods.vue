@@ -11,6 +11,13 @@
           :z-index="1000"
         ></el-image>
       </template>
+      <template #status="scope">
+        <el-button
+          size="small"
+          :type="scope.row.status ? 'success' : 'danger'"
+          >{{ scope.row.status ? '启用' : '禁用' }}</el-button
+        >
+      </template>
     </page-content>
   </div>
 </template>

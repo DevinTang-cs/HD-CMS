@@ -1,10 +1,8 @@
 <template>
   <div class="role">
     <page-search :search-form-config="searchFormConfig"></page-search>
-    <page-content
-      :content-table-config="contentTableConfig"
-      page-name="/role"
-    ></page-content>
+    <page-content :content-table-config="contentTableConfig" page-name="/role">
+    </page-content>
   </div>
 </template>
 

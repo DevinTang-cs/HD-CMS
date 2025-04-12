@@ -11,13 +11,6 @@
         <el-button type="primary" size="small">新建用户</el-button>
         <el-button size="small">刷新</el-button>
       </template>
-      <template #status="scope">
-        <el-button
-          size="small"
-          :type="scope.row.enable ? 'success' : 'danger'"
-          >{{ scope.row.enable ? '启用' : '禁用' }}</el-button
-        >
-      </template>
       <template #createAt="scope">
         <strong>{{ $filters.formatTime(scope.row.createAt) }}</strong>
       </template>
@@ -93,7 +86,7 @@ export default defineComponent({
     // 获取动态插槽名称
     const otherPropSlots = props.contentTableConfig.propList.filter(
       (item: any) => {
-        if (item.slotName === 'status') return false
+        // if (item.slotName === 'status') return false
         if (item.slotName === 'createAt') return false
         if (item.slotName === 'updateAt') return false
         if (item.slotName === 'handler') return false
