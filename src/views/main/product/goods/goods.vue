@@ -1,6 +1,5 @@
 <template>
   <div class="goods">
-    <h2>goods</h2>
     <page-content page-name="/goods" :content-table-config="contentTableConfig">
       <template #image="scope">
         <el-image

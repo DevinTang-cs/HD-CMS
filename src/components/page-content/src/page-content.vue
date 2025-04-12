@@ -8,8 +8,9 @@
       :prop-list="contentTableConfig.propList"
     >
       <template #headerHandler>
-        <el-button type="primary" size="small">新建用户</el-button>
-        <el-button size="small">刷新</el-button>
+        <el-button type="primary" size="small" v-if="isCreate">
+          新建用户
+        </el-button>
       </template>
       <template #createAt="scope">
         <strong>{{ $filters.formatTime(scope.row.createAt) }}</strong>
@@ -19,8 +20,15 @@
       </template>
       <template #handler>
         <div class="handle-btns">
-          <el-button size="small" type="default">编辑</el-button>
-          <el-button size="small" type="default" style="color: red">
+          <el-button size="small" type="default" v-if="isUpdate">
+            编辑
+          </el-button>
+          <el-button
+            size="small"
+            type="default"
+            style="color: red"
+            v-if="isDelete"
+          >
             删除
           </el-button>
         </div>
@@ -42,6 +50,7 @@
 import { defineComponent, computed, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import myTable from '@/base-ui/table/index'
+import { usePermission } from '@/hooks/usePermission'
 
 export default defineComponent({
   props: {
@@ -60,11 +69,17 @@ export default defineComponent({
   setup(props) {
     const store = useStore()
 
+    const isCreate = usePermission(props.pageName, 'create')
+    const isUpdate = usePermission(props.pageName, 'update')
+    const isDelete = usePermission(props.pageName, 'delete')
+    const isQuery = usePermission(props.pageName, 'query')
+
     const pageInfo = ref({ currentPage: 1, pageSize: 10 })
     watch(pageInfo, () => getPageData())
 
     // 发送网络请求
     const getPageData = (queryInfo: any = {}) => {
+      if (!isQuery) return
       store.dispatch('system/getPageListAction', {
         pageName: props.pageName,
         queryInfo: {
@@ -101,7 +116,11 @@ export default defineComponent({
       getPageData,
       dataCount,
       pageInfo,
-      otherPropSlots
+      otherPropSlots,
+      isCreate,
+      isUpdate,
+      isDelete,
+      isQuery
     }
   }
 })
