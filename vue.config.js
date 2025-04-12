@@ -24,6 +24,9 @@ module.exports = {
     })
   },
   configureWebpack: {
+    resolve: {
+      modules: ['node_modules'] // 确保 node_modules 在查找路径中
+    },
     plugins: [
       AutoImport({
         imports: ['vue', 'vue-router'],
@@ -51,6 +54,11 @@ module.exports = {
         compiler: 'vue3'
       })
     ]
+  },
+  devServer: {
+    client: {
+      overlay: false
+    }
   }
   // devServer: {
   //   proxy: {
