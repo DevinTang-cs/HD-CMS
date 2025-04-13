@@ -46,7 +46,7 @@ export default defineComponent({
     pageContent,
     pageModal
   },
-  setup(props) {
+  setup() {
     const { pageContentRef, handleQueryClick, handleResetClick } =
       usePageSearch()
 
