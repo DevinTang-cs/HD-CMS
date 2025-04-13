@@ -45,13 +45,14 @@ const loginModule: Module<ILoginState, IRootState> = {
     }
   },
   actions: {
-    async accountLoginAction({ commit }, payload: IAccount) {
+    async accountLoginAction({ commit, dispatch }, payload: IAccount) {
       console.log('operate action', payload)
       // 处理登录逻辑
       const loginResult = await accountLoginRequest(payload)
       const { id, token } = loginResult.data
       commit('changeToken', token)
       localCache.setCache('token', token)
+      dispatch('getInitialDataAction', null, { root: true })
       // 请求用户信息
       const userInfoResult = await requestUserInfoById(id)
       const userInfo = userInfoResult.data
@@ -65,10 +66,11 @@ const loginModule: Module<ILoginState, IRootState> = {
       // 跳转首页
       router.push('/main')
     },
-    loadLocalLogin({ commit }) {
+    loadLocalLogin({ commit, dispatch }) {
       const token = localCache.getCache('token')
       if (token) {
         commit('changeToken', token)
+        dispatch('getInitialDataAction', null, { root: true })
       }
       const userInfo = localCache.getCache('userInfo')
       if (userInfo) {
