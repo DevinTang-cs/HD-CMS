@@ -8,7 +8,12 @@
       :prop-list="contentTableConfig.propList"
     >
       <template #headerHandler>
-        <el-button type="primary" size="small" v-if="isCreate">
+        <el-button
+          type="primary"
+          size="small"
+          v-if="isCreate"
+          @click="handleNewClick"
+        >
           新建用户
         </el-button>
       </template>
@@ -20,7 +25,12 @@
       </template>
       <template #handler="scope">
         <div class="handle-btns">
-          <el-button size="small" type="default" v-if="isUpdate">
+          <el-button
+            size="small"
+            type="default"
+            v-if="isUpdate"
+            @click="handleEditClick(scope.row)"
+          >
             编辑
           </el-button>
           <el-button
@@ -67,7 +77,8 @@ export default defineComponent({
   components: {
     myTable
   },
-  setup(props) {
+  emits: ['newBtnClick', 'editBtnClick'],
+  setup(props, { emit }) {
     const store = useStore()
 
     const isCreate = usePermission(props.pageName, 'create')
@@ -119,6 +130,14 @@ export default defineComponent({
       })
     }
 
+    const handleNewClick = () => {
+      emit('newBtnClick')
+    }
+
+    const handleEditClick = (item: any) => {
+      emit('editBtnClick', item)
+    }
+
     return {
       dataList,
       getPageData,
@@ -129,7 +148,9 @@ export default defineComponent({
       isUpdate,
       isDelete,
       isQuery,
-      handleDeleteClick
+      handleDeleteClick,
+      handleEditClick,
+      handleNewClick
     }
   }
 })

@@ -9,6 +9,8 @@
       ref="pageContentRef"
       :content-table-config="contentTableConfig"
       page-name="/users"
+      @edit-btn-click="handleEditData"
+      @new-btn-click="handleNewData"
     >
       <template #status="scope">
         <el-button
@@ -18,7 +20,11 @@
         >
       </template>
     </page-content>
-    <page-modal :modal-config="modalConfig"></page-modal>
+    <page-modal
+      :modal-config="modalConfig"
+      ref="pageModalRef"
+      :defaultInfo="defaultInfo"
+    ></page-modal>
   </div>
 </template>
 
@@ -31,6 +37,7 @@ import pageContent from '@/components/page-content/index'
 import { usePageSearch } from '@/hooks/usePageSearch'
 import { modalConfig } from './config/modal.config'
 import pageModal from '@/components/page-modal'
+import usePageModal from '@/hooks/usePageModals'
 
 export default defineComponent({
   name: 'user',
@@ -43,13 +50,20 @@ export default defineComponent({
     const { pageContentRef, handleQueryClick, handleResetClick } =
       usePageSearch()
 
+    const { pageModalRef, handleEditData, handleNewData, defaultInfo } =
+      usePageModal()
+
     return {
       searchFormConfig,
       contentTableConfig,
       pageContentRef,
       handleResetClick,
       handleQueryClick,
-      modalConfig
+      modalConfig,
+      handleEditData,
+      handleNewData,
+      pageModalRef,
+      defaultInfo
     }
   }
 })
