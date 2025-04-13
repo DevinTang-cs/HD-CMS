@@ -1,4 +1,5 @@
 import { IForm } from '@/base-ui/form/type/types'
+import store from '@/store'
 
 export const modalConfig: IForm = {
   formItems: [

@@ -38,6 +38,7 @@ import { usePageSearch } from '@/hooks/usePageSearch'
 import { modalConfig } from './config/modal.config'
 import pageModal from '@/components/page-modal'
 import usePageModal from '@/hooks/usePageModals'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'user',
@@ -66,6 +67,25 @@ export default defineComponent({
         passwordItem.isHidden = true
       }
     }
+
+    const store = useStore()
+    const departmentItem = modalConfig.formItems?.find(
+      (item) => item.field === 'departmentId'
+    )
+    if (departmentItem) {
+      departmentItem.options = store.state.entireDepartment.map((item: any) => {
+        return { title: item.name, value: item.id }
+      })
+    }
+    const roleItem = modalConfig.formItems?.find(
+      (item) => item.field === 'roleId'
+    )
+    if (roleItem) {
+      roleItem.options = store.state.entireRole.map((item: any) => {
+        return { title: item.name, value: item.id }
+      })
+    }
+
     const { pageModalRef, handleEditData, handleNewData, defaultInfo } =
       usePageModal(newCB, editCB)
     return {
