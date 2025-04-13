@@ -50,9 +50,24 @@ export default defineComponent({
     const { pageContentRef, handleQueryClick, handleResetClick } =
       usePageSearch()
 
+    const newCB = () => {
+      const passwordItem = modalConfig.formItems?.find(
+        (item) => item.field === 'password'
+      )
+      if (passwordItem) {
+        passwordItem.isHidden = false
+      }
+    }
+    const editCB = () => {
+      const passwordItem = modalConfig.formItems?.find(
+        (item) => item.field === 'password'
+      )
+      if (passwordItem) {
+        passwordItem.isHidden = true
+      }
+    }
     const { pageModalRef, handleEditData, handleNewData, defaultInfo } =
-      usePageModal()
-
+      usePageModal(newCB, editCB)
     return {
       searchFormConfig,
       contentTableConfig,
