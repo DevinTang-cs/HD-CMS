@@ -1,7 +1,11 @@
 import { Module } from 'vuex'
 import { ISystemState } from './types'
 import { IRootState } from '@/store/types'
-import { getPageListData } from '@/service/main/system/system'
+import {
+  createPageData,
+  editPageData,
+  getPageListData
+} from '@/service/main/system/system'
 import { deletePageData } from '@/service/main/system/system'
 
 const systemModule: Module<ISystemState, IRootState> = {
@@ -102,6 +106,30 @@ const systemModule: Module<ISystemState, IRootState> = {
       const { pageName, id } = payload
       const pageUrl = `${pageName}/${id}`
       await deletePageData(pageUrl)
+      dispatch('getPageListAction', {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
+    },
+    async createPageDataAction({ dispatch }, payload: any) {
+      const { pageName, newData } = payload
+      const pageUrl = pageName
+      await createPageData(pageUrl, newData)
+      dispatch('getPageListAction', {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
+    },
+    async editPageDataAction({ dispatch }, payload: any) {
+      const { pageName, editData, id } = payload
+      const pageUrl = pageName + `/${id}`
+      await editPageData(pageUrl, editData)
       dispatch('getPageListAction', {
         pageName,
         queryInfo: {
